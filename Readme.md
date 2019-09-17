@@ -7,7 +7,6 @@ Labs consist of projects, which require both a design (MagicDraw project) and a 
 
 ### Requirements:
  - 1 entity (user, product, etc.) that has variable functionality.
- - Around 15 classes.
  - Use Template Method for one implementation and Strategy pattern for another one.
  - Compare both methods.
  - Console application with at least a few lines of output.
