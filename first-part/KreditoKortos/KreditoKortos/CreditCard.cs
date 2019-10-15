@@ -33,7 +33,7 @@ namespace KreditoKortos
                 transactionCost += CurrencyChangeTax(sum, this.account.usedCurrency, targetCurrency);
             }
 
-            transactionCost += withrawalTax(costInOwnCurrency, ATMCountry);
+            transactionCost += WithrawalTax(costInOwnCurrency, ATMCountry);
             transactionCost += costInOwnCurrency;
 
             if (!PaymentLimitReached(transactionCost) && costInOwnCurrency < MaximumWithrawalSum())
@@ -44,19 +44,37 @@ namespace KreditoKortos
         }
 
         /// <summary>
-        /// Reduces the sum stored in the account by the sum converted to own currency if recipient operates in another currency.
+        /// Transfers money to a recipient account.
         /// </summary>
         /// <param name="sum">amount of money to be transfered to another account. Type of currency - one that recipient operates in.</param>
-        /// <param name="recipient">the account to which the sum will be transfered</param>
-        public void TransferMoney(float sum, Account recipient)
+        /// <param name="recipient">the account to which the sum will be transfered.</param>
+        /// <returns>True if transfer succeeded, false otherwise.</returns>
+        public bool TransferMoney(float sum, Account recipient)
         {
+            float transactionCost = 0;
+            float costInOwnCurrency = Currency.ConvertCurrency(sum, recipient.usedCurrency, this.account.usedCurrency);
+            if (recipient.usedCurrency.Name != this.account.usedCurrency.Name)
+            {
+                transactionCost += CurrencyChangeTax(sum, this.account.usedCurrency, recipient.usedCurrency);
+            }
 
+            transactionCost += costInOwnCurrency + CalculateTransactionTax(sum, recipient);
+
+            if (!PaymentLimitReached(transactionCost))
+            {
+                if (this.account.withraw(transactionCost))
+                {
+                    recipient.deposit(sum);
+                    return true;
+                }
+            }
+            return false;
         }
 
         abstract protected bool PaymentLimitReached(float sumToPay);
         abstract protected float CalculateTransactionTax(float sum, Account recipient);
         abstract protected float CurrencyChangeTax(float sum, Currency initialCurrency, Currency targetCurrency);
         abstract protected float MaximumWithrawalSum();
-        abstract protected float withrawalTax(float sum, string ATMCountry);
+        abstract protected float WithrawalTax(float sum, string ATMCountry);
     }
 }
