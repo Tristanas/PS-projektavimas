@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KreditoKortos
 {
-    abstract class CreditCard
+    public abstract class CreditCard
     {
         public float currentDayExpenses;
         public Account account;
