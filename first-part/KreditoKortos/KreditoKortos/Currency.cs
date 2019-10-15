@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KreditoKortos
 {
-    class Currency
+    public class Currency
     {
         public string Name;
         public float ValueInEuro;
