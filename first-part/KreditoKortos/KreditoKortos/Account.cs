@@ -32,5 +32,10 @@
             this.sum -= sum;
             return true;
         }
+
+        public float getSum()
+        {
+            return this.sum;
+        }
     }
 }

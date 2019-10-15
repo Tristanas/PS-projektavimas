@@ -44,10 +44,30 @@ namespace KreditoKortos
             }
 
             // Predefined scenario:
-            myCard.TransferMoney(10f, myFriend);
-            myCard.TransferMoney(120f, anotherFriend);
-            myCard.WithrawMoney(50f, euro, "LT");
-            myCard.WithrawMoney(50f, euro, "LV");
+            float transferSum1 = 10f, transferSum2 = 120f, withrawSum1 = 50f, withrawSum2 = 50f;
+            Console.WriteLine($"Before carrying out any operations your bank account is {myAccount.getSum()} {myAccount.usedCurrency.Name}");
+
+            myCard.TransferMoney(transferSum1, myFriend);
+            printStatusUpdate(transferSum1, myFriend, myAccount);
+            myCard.TransferMoney(transferSum2, anotherFriend);
+            printStatusUpdate(transferSum2, anotherFriend, myAccount);
+
+            myCard.WithrawMoney(withrawSum1, euro, "LT");
+            printStatusUpdate(withrawSum1, euro, "LT", myAccount);
+            myCard.WithrawMoney(withrawSum2, euro, "LV");
+            printStatusUpdate(withrawSum2, euro, "LV", myAccount);
+            Console.ReadKey();
+        }
+
+        static void printStatusUpdate(float sum, Account recipient, Account payer)
+        {
+            Console.WriteLine("You transfered {0} {1} to your friend. Your bank account now has: {2} {3}.", 
+                sum, recipient.usedCurrency.Name, payer.getSum(), payer.usedCurrency.Name);
+        }
+        static void printStatusUpdate(float sum, Currency currency, string country, Account account)
+        {
+            Console.WriteLine($"You withdrew {sum} {currency.Name} in {country}. " 
+                + $"Your bank account now has: {account.getSum()} {account.usedCurrency.Name}.");
         }
     }
 }
