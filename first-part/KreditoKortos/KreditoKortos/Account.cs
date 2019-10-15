@@ -18,6 +18,11 @@
             this.sum += sum;
         }
 
+        /// <summary>
+        /// Attempts to withdraw money from the account.
+        /// </summary>
+        /// <param name="sum">amount of money to withraw</param>
+        /// <returns>True if withrawal succeeded, false if there wasn't enough money.</returns>
         public bool withraw(float sum)
         {
             if (sum > this.sum)
