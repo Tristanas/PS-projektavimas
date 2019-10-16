@@ -17,7 +17,7 @@ namespace KreditoKortos
             Currency dollar = new Currency() { Name = "Dollar", ValueInEuro = 1.234f };
 
             // Setting up examplary accounts:
-            Account myAccount = new Account("LT113423444", euro, 500f);
+            Account myAccount = new Account("LT113423444", euro, 100f);
             Account myFriend = new Account("US131234923485", byteCoin);
             Account anotherFriend = new Account("LT10005000043", dollar);
 
@@ -44,6 +44,11 @@ namespace KreditoKortos
             }
 
             // Predefined scenario:
+            Console.WriteLine($"Your bank account has: {myAccount.getSum()} {myAccount.usedCurrency.Name}");
+            Console.WriteLine("You're requesting a loan, enter sum:");
+            float sum = float.Parse(Console.ReadLine());
+            myCard.GetALoan(sum);
+
             float transferSum1 = 10f, transferSum2 = 120f, withrawSum1 = 50f, withrawSum2 = 50f;
             Console.WriteLine($"Before carrying out any operations your bank account is {myAccount.getSum()} {myAccount.usedCurrency.Name}");
 

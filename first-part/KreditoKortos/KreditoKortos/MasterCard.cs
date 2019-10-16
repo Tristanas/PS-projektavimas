@@ -13,6 +13,21 @@ namespace KreditoKortos
         {
         }
 
+        protected override string GetLoanDeposit()
+        {
+            return "";
+        }
+
+        protected override bool IsLoanDepositSuitable(string deposit)
+        {
+            return true;
+        }
+
+        protected override bool IsLoanPriceValid(float sum)
+        {
+            return sum > 100f && sum < 250000f;
+        }
+
         /// <summary>
         /// Premium card holders are not taxed for foreign transactions. They actually get back a fraction of money transferred.
         /// </summary>

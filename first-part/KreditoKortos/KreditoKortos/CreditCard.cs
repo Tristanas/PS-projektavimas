@@ -71,10 +71,39 @@ namespace KreditoKortos
             return false;
         }
 
+        public void GetALoan(float sum)
+        {
+            if (IsLoanPriceValid(sum))
+            {
+                string deposit = GetLoanDeposit();
+                Loan newLoan = new Loan(sum, deposit);
+                if (IsLoanDepositSuitable(deposit))
+                {
+                    RequestLoan(newLoan);
+                    return;
+                }
+            }
+            Console.WriteLine("Invalid loan sum or deposit.");
+        }
+
+        private void RequestLoan(Loan loan)
+        {
+            if (this.account.setDebt(loan))
+            {
+                this.account.deposit(loan.sum);
+                return;
+            }
+            Console.WriteLine("Unable to get a new loan, already in debt.");
+        }
+
         abstract protected bool PaymentLimitReached(float sumToPay);
         abstract protected float CalculateTransactionTax(float sum, Account recipient);
         abstract protected float CurrencyChangeTax(float sum, Currency initialCurrency, Currency targetCurrency);
         abstract protected float MaximumWithrawalSum();
         abstract protected float WithrawalTax(float sum, string ATMCountry);
+        //Should the loan be too little or too big, it should not be lended.
+        abstract protected bool IsLoanPriceValid(float sum);
+        abstract protected string GetLoanDeposit();
+        abstract protected bool IsLoanDepositSuitable(string deposit);
     }
 }

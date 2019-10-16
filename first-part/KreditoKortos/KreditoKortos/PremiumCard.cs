@@ -11,6 +11,21 @@ namespace KreditoKortos
         public PremiumCard(Account account) : base(account)
         {
         }
+        protected override string GetLoanDeposit()
+        {
+            Console.WriteLine("You are required to make a deposit for the loan. Enter what property you deposit:");
+            return Console.ReadLine();
+        }
+
+        protected override bool IsLoanDepositSuitable(string deposit)
+        {
+            return deposit == "house" || deposit == "car" || deposit == "forrest";
+        }
+
+        protected override bool IsLoanPriceValid(float sum)
+        {
+            return sum > 100f && sum < 20000f;
+        }
 
         /// <summary>
         /// Premium card holders are not taxed for foreign transactions.

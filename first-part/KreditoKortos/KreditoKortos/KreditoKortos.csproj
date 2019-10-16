@@ -46,6 +46,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="CreditCard.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="Loan.cs" />
     <Compile Include="MasterCard.cs" />
     <Compile Include="PremiumCard.cs" />
     <Compile Include="Program.cs" />

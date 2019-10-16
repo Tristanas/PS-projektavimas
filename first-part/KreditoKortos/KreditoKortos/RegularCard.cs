@@ -36,6 +36,22 @@ namespace KreditoKortos
             return initialCurrency.Name == targetCurrency.Name ? 0 : sum * 0.04f;
         }
 
+        protected override string GetLoanDeposit()
+        {
+            Console.WriteLine("You are required to make a deposit for the loan. Enter what property you deposit:");
+            return Console.ReadLine();
+        }
+
+        protected override bool IsLoanDepositSuitable(string deposit)
+        {
+            return deposit == "car" || deposit == "house";
+        }
+
+        protected override bool IsLoanPriceValid(float sum)
+        {
+            return sum > 100f && sum < 5000f;
+        }
+
         protected override float MaximumWithrawalSum()
         {
             return 300f;
