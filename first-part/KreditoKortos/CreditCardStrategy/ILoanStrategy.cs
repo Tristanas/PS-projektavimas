@@ -9,8 +9,5 @@ namespace CreditCardStrategy
     public interface ILoanStrategy
     {
         void GetLoan(CreditCard card, float sum);
-        string SetLoan();
-        bool IsLoanSumSuitable(float sum);
-
     }
 }
