@@ -6,26 +6,36 @@ using System.Threading.Tasks;
 
 namespace KreditoKortos
 {
-    public class RegularCard : CreditCard
+    public class PremiumCardDepositless : CreditCard
     {
-        public RegularCard(Account account) : base(account)
+        public PremiumCardDepositless(Account account) : base(account)
         {
         }
 
+        protected override string GetLoanDeposit()
+        {
+            return "";
+        }
+
+        protected override bool IsLoanDepositSuitable(string deposit)
+        {
+            return true;
+        }
+
+        protected override bool IsLoanPriceValid(float sum)
+        {
+            return sum > 100f && sum < 20000f;
+        }
+
         /// <summary>
-        /// Uses account iban to check whether both accounts are from the same country. 
-        /// If not, applies a tax equal to 5% of transfered sum.
+        /// Premium card holders are not taxed for foreign transactions.
         /// </summary>
         /// <param name="sum">amount of money transfered</param>
         /// <param name="recipient">Account to which the money is transfered</param>
         /// <returns></returns>
         protected override float CalculateTransactionTax(float sum, Account recipient)
         {
-            if (this.account.iban.Contains(recipient.iban.Substring(0, 2)))
-            {
-                return 0;
-            }
-            return 0.05f * sum;
+            return 0;
         }
 
         /// <summary>
@@ -33,33 +43,17 @@ namespace KreditoKortos
         /// </summary>
         protected override float CurrencyChangeTax(float sum, Currency initialCurrency, Currency targetCurrency)
         {
-            return initialCurrency.Name == targetCurrency.Name ? 0 : sum * 0.04f;
-        }
-
-        protected override string GetLoanDeposit()
-        {
-            Console.WriteLine("You are required to make a deposit for the loan. Enter what property you deposit:");
-            return Console.ReadLine();
-        }
-
-        protected override bool IsLoanDepositSuitable(string deposit)
-        {
-            return deposit == "car" || deposit == "house";
-        }
-
-        protected override bool IsLoanPriceValid(float sum)
-        {
-            return sum > 100f && sum < 5000f;
+            return initialCurrency.Name == targetCurrency.Name ? 0 : sum * 0.02f;
         }
 
         protected override float MaximumWithrawalSum()
         {
-            return 300f;
+            return 1000f;
         }
 
         protected override bool PaymentLimitReached(float sumToPay)
         {
-            return this.currentDayExpenses + sumToPay > 500f;
+            return this.currentDayExpenses + sumToPay > 2000f;
         }
 
         /// <summary>
@@ -68,7 +62,7 @@ namespace KreditoKortos
         /// <param name="ATMCountry">where the ATM is located</param>
         protected override float WithrawalTax(float sum, string ATMCountry)
         {
-            return this.account.iban.StartsWith(ATMCountry) ? 0 : Math.Min(sum * 0.05f, 20f);
+            return this.account.iban.StartsWith(ATMCountry) ? 0 : Math.Min(sum * 0.02f, 20f);
         }
     }
 }

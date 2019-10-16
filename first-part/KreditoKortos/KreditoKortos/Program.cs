@@ -30,13 +30,13 @@ namespace KreditoKortos
             switch (selection.First())
             {
                 case '1':
-                    myCard = new RegularCard(myAccount);
+                    myCard = new RegularCardWithDeposit(myAccount);
                     break;
                 case '2':
-                    myCard = new PremiumCard(myAccount);
+                    myCard = new PremiumCardWithDeposit(myAccount);
                     break;
                 case '3':
-                    myCard = new MasterCard(myAccount);
+                    myCard = new MasterCardDepositless(myAccount);
                     break;
                 default:
                     Console.WriteLine("Wrong selection. Good bye.");
