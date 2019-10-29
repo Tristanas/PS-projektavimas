@@ -8,25 +8,27 @@ namespace KreditoKortos
 {
     class MasterCardWithDeposit : CreditCard
     {
-        public float transactionReturns = 0.01f;
+        MasterPayment payment;
+        LoanWithDeposit loan;
         public MasterCardWithDeposit(Account account) : base(account)
         {
+            payment = new MasterPayment();
+            loan = new LoanWithDeposit(100f, 250000f);
         }
 
         protected override string GetLoanDeposit()
         {
-            Console.WriteLine("You are required to make a deposit for the loan. Enter what property you deposit:");
-            return Console.ReadLine();
+            return loan.GetLoanDeposit();
         }
 
         protected override bool IsLoanDepositSuitable(string deposit)
         {
-            return deposit == "car" || deposit == "house";
+            return loan.IsLoanDepositSuitable(deposit);
         }
 
         protected override bool IsLoanPriceValid(float sum)
         {
-            return sum > 100f && sum < 250000f;
+            return loan.IsLoanPriceValid(sum);
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace KreditoKortos
         /// <returns></returns>
         protected override float CalculateTransactionTax(float sum, Account recipient)
         {
-            return -sum * transactionReturns;
+            return payment.CalculateTransactionTax(sum, recipient);
         }
 
         /// <summary>
@@ -45,24 +47,24 @@ namespace KreditoKortos
         /// </summary>
         protected override float CurrencyChangeTax(float sum, Currency initialCurrency, Currency targetCurrency)
         {
-            return 0;
+            return payment.CurrencyChangeTax(sum, initialCurrency, targetCurrency);
         }
 
         protected override float MaximumWithrawalSum()
         {
-            return 20000f;
+            return payment.MaximumWithrawalSum();
         }
 
         // Master card owners can spend unlimited amounts of money each day.
         protected override bool PaymentLimitReached(float sumToPay)
         {
-            return false;
+            return payment.PaymentLimitReached(sumToPay);
         }
 
         /// Master card owners do not pay tax when withrawing money abroad.
         protected override float WithrawalTax(float sum, string ATMCountry)
         {
-            return 0;
+            return payment.WithrawalTax(sum, ATMCountry);
         }
     }
 }

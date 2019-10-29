@@ -8,60 +8,52 @@ namespace KreditoKortos
 {
     class MasterCardDepositless: CreditCard
     {
-        public float transactionReturns = 0.01f;
+        MasterPayment payment;
+        LoanWithoutDeposit loan;
         public MasterCardDepositless(Account account) : base(account)
         {
+            payment = new MasterPayment();
+            loan = new LoanWithoutDeposit(100, 250000);
         }
 
         protected override string GetLoanDeposit()
         {
-            return "";
+            return loan.GetLoanDeposit();
         }
 
         protected override bool IsLoanDepositSuitable(string deposit)
         {
-            return true;
+            return loan.IsLoanDepositSuitable(deposit);
         }
 
         protected override bool IsLoanPriceValid(float sum)
         {
-            return sum > 100f && sum < 250000f;
+            return loan.IsLoanPriceValid(sum);
         }
 
-        /// <summary>
-        /// Premium card holders are not taxed for foreign transactions. They actually get back a fraction of money transferred.
-        /// </summary>
-        /// <param name="sum">amount of money transfered</param>
-        /// <param name="recipient">Account to which the money is transfered</param>
-        /// <returns></returns>
         protected override float CalculateTransactionTax(float sum, Account recipient)
         {
-            return -sum * transactionReturns;
+            return payment.CalculateTransactionTax(sum, recipient);
         }
 
-        /// <summary>
-        /// Master card owners do not pay for changing currency.
-        /// </summary>
         protected override float CurrencyChangeTax(float sum, Currency initialCurrency, Currency targetCurrency)
         {
-            return 0;
+            return payment.CurrencyChangeTax(sum, initialCurrency, targetCurrency);
         }
 
         protected override float MaximumWithrawalSum()
         {
-            return 20000f;
+            return payment.MaximumWithrawalSum();
         }
 
-        // Master card owners can spend unlimited amounts of money each day.
         protected override bool PaymentLimitReached(float sumToPay)
         {
-            return false;
+            return payment.PaymentLimitReached(sumToPay);
         }
 
-        /// Master card owners do not pay tax when withrawing money abroad.
         protected override float WithrawalTax(float sum, string ATMCountry)
         {
-            return 0;
+            return payment.WithrawalTax(sum, ATMCountry);
         }
     }
 }
