@@ -47,11 +47,14 @@
     <Compile Include="CreditCard.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="Loan.cs" />
-    <Compile Include="MasterCard.cs" />
-    <Compile Include="PremiumCard.cs" />
+    <Compile Include="MasterCardDepositless.cs" />
+    <Compile Include="MasterCardWithDeposit.cs" />
+    <Compile Include="PremiumCardDepositless.cs" />
+    <Compile Include="PremiumCardWithDeposit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegularCard.cs" />
+    <Compile Include="RegularCardWithDeposit.cs" />
+    <Compile Include="RegularCardDepositless.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

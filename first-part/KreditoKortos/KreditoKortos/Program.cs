@@ -26,6 +26,7 @@ namespace KreditoKortos
             Console.WriteLine("Select your card by writing the index of desired card:");
             Console.WriteLine("1. Regular card, 2. Premium, 3. Master card.");
 
+
             selection = Console.ReadLine();
             switch (selection.First())
             {

@@ -1,33 +1,23 @@
-﻿using System;
+﻿using KreditoKortos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KreditoKortos;
 
 namespace CreditCardStrategy
 {
-    class RegularPaymentStrategy : IPaymentStrategy
+    class MasterPaymentStrategy: IPaymentStrategy
     {
-        public float MaximumWithrawalSum = 150f;
-        public float DailyTransactionLimit = 500f;
-        public float CurrencyConversionTaxRate = 0.04f;
-        public float ForeignTransactionTaxRate = 0.02f;
-        public float ForeignWithdrawalTaxRate = 0.05f;
-        public float MaximumWithdrawalTax = 20f;
+        public float MaximumWithrawalSum = 3000f;
+        public float DailyTransactionLimit = 10000f;
+        public float GlobalDiscountPercentage = 0.01f;
 
         public bool Withdraw(float sum, Currency targetCurrency, string ATMCountry, CreditCard card)
         {
             Account account = card.account;
             float costInOwnCurrency = Currency.ConvertCurrency(sum, targetCurrency, account.usedCurrency);
             float transactionCost = costInOwnCurrency;
-
-            if (targetCurrency.Name != account.usedCurrency.Name)
-            {
-                transactionCost += costInOwnCurrency * CurrencyConversionTaxRate;
-            }
-
-            transactionCost += account.iban.StartsWith(ATMCountry) ? 0 : Math.Min(costInOwnCurrency * ForeignWithdrawalTaxRate, MaximumWithdrawalTax);
 
             if (card.currentDayExpenses + transactionCost < DailyTransactionLimit && costInOwnCurrency < MaximumWithrawalSum)
             {
@@ -48,12 +38,7 @@ namespace CreditCardStrategy
             float costInOwnCurrency = Currency.ConvertCurrency(sum, recipient.usedCurrency, account.usedCurrency);
             float transactionCost = costInOwnCurrency;
 
-            if (recipient.usedCurrency.Name != account.usedCurrency.Name)
-            {
-                transactionCost += costInOwnCurrency * CurrencyConversionTaxRate;
-            }
-
-            transactionCost += account.iban.Contains(recipient.iban.Substring(0, 2)) ? 0 : ForeignTransactionTaxRate * costInOwnCurrency;
+            transactionCost -= costInOwnCurrency * GlobalDiscountPercentage;
 
             if (card.currentDayExpenses + transactionCost < DailyTransactionLimit)
             {

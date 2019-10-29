@@ -43,11 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreditCard.cs" />
+    <Compile Include="ILoanStrategy.cs" />
+    <Compile Include="IPaymentStrategy.cs" />
+    <Compile Include="LoanDepositlessStrategy.cs" />
+    <Compile Include="LoanWithDepositStrategy.cs" />
+    <Compile Include="MasterPaymentStrategy.cs" />
+    <Compile Include="PremiumPaymentStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegularPaymentStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KreditoKortos\CreditCardTemplate.csproj">
+      <Project>{7f1524f6-273d-4567-a801-b1fe0c59dd5e}</Project>
+      <Name>CreditCardTemplate</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

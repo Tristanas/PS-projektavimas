@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KreditoKortos", "KreditoKortos\KreditoKortos.csproj", "{7F1524F6-273D-4567-A801-B1FE0C59DD5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCardTemplate", "KreditoKortos\CreditCardTemplate.csproj", "{7F1524F6-273D-4567-A801-B1FE0C59DD5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCardStrategy", "CreditCardStrategy\CreditCardStrategy.csproj", "{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7F1524F6-273D-4567-A801-B1FE0C59DD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F1524F6-273D-4567-A801-B1FE0C59DD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F1524F6-273D-4567-A801-B1FE0C59DD5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

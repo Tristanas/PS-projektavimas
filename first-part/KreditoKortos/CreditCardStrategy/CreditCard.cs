@@ -11,15 +11,15 @@ namespace CreditCardStrategy
     {
         public float currentDayExpenses;
         public Account account;
-        public IPaymentStrategy paymentStrategy;
-        public ILoanStrategy loanStrategy;
+        private IPaymentStrategy paymentStrategy;
+        private ILoanStrategy loanStrategy;
 
-        public CreditCard(Account account, IPaymentStrategy paymentStrategy, ILoanStrategy loanStrategy)
+        public CreditCard(Account account, IPaymentStrategy paymentStrategy = null, ILoanStrategy loanStrategy = null)
         {
             this.account = account;
             currentDayExpenses = 0;
-            this.paymentStrategy = paymentStrategy;
-            this.loanStrategy = loanStrategy;
+            this.paymentStrategy = paymentStrategy != null ? paymentStrategy : new RegularPaymentStrategy();
+            this.loanStrategy = loanStrategy != null ? loanStrategy : new LoanWithDepositStrategy();
         }
 
         /// <summary>
@@ -31,21 +31,7 @@ namespace CreditCardStrategy
         /// <returns>True if withrawal was successful, false otherwise.</returns>
         public bool WithrawMoney(float sum, Currency targetCurrency, string ATMCountry)
         {
-            float transactionCost = 0;
-            float costInOwnCurrency = Currency.ConvertCurrency(sum, targetCurrency, this.account.usedCurrency);
-            if (targetCurrency.Name != this.account.usedCurrency.Name)
-            {
-                transactionCost += CurrencyChangeTax(sum, this.account.usedCurrency, targetCurrency);
-            }
-
-            transactionCost += WithrawalTax(costInOwnCurrency, ATMCountry);
-            transactionCost += costInOwnCurrency;
-
-            if (!PaymentLimitReached(transactionCost) && costInOwnCurrency < MaximumWithrawalSum())
-            {
-                return this.account.withraw(transactionCost);
-            }
-            return false;
+            return paymentStrategy.Withdraw(sum, targetCurrency, ATMCountry, this);
         }
 
         /// <summary>
@@ -56,48 +42,22 @@ namespace CreditCardStrategy
         /// <returns>True if transfer succeeded, false otherwise.</returns>
         public bool TransferMoney(float sum, Account recipient)
         {
-            float transactionCost = 0;
-            float costInOwnCurrency = Currency.ConvertCurrency(sum, recipient.usedCurrency, this.account.usedCurrency);
-            if (recipient.usedCurrency.Name != this.account.usedCurrency.Name)
-            {
-                transactionCost += CurrencyChangeTax(sum, this.account.usedCurrency, recipient.usedCurrency);
-            }
-
-            transactionCost += costInOwnCurrency + CalculateTransactionTax(sum, recipient);
-
-            if (!PaymentLimitReached(transactionCost))
-            {
-                if (this.account.withraw(transactionCost))
-                {
-                    recipient.deposit(sum);
-                    return true;
-                }
-            }
-            return false;
+            return paymentStrategy.Transfer(sum, recipient, this);
         }
 
         public void GetALoan(float sum)
         {
-            if (IsLoanPriceValid(sum))
-            {
-                string deposit = GetLoanDeposit();
-                Loan newLoan = new Loan(sum, deposit);
-                if (IsLoanDepositSuitable(deposit))
-                {
-                    RequestLoan(newLoan);
-                    return;
-                }
-            }
-            Console.WriteLine("Invalid loan sum or deposit.");
+            loanStrategy.GetLoan(this, sum);
         }
 
-        private void RequestLoan(Loan loan)
+        public void setPaymentStrategy(IPaymentStrategy strategy)
         {
-            if (this.account.setDebt(loan))
-            {
-                this.account.deposit(loan.sum);
-                return;
-            }
-            Console.WriteLine("Unable to get a new loan, already in debt.");
+            this.paymentStrategy = strategy;
         }
+
+        public void setLoanStrategy(ILoanStrategy strategy)
+        {
+            this.loanStrategy = strategy;
+        }
+    }
 }

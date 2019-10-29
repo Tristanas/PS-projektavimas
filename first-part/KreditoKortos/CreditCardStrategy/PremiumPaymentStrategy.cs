@@ -1,19 +1,19 @@
-﻿using System;
+﻿using KreditoKortos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KreditoKortos;
 
 namespace CreditCardStrategy
 {
-    class RegularPaymentStrategy : IPaymentStrategy
+    class PremiumPaymentStrategy: IPaymentStrategy
     {
-        public float MaximumWithrawalSum = 150f;
-        public float DailyTransactionLimit = 500f;
-        public float CurrencyConversionTaxRate = 0.04f;
-        public float ForeignTransactionTaxRate = 0.02f;
-        public float ForeignWithdrawalTaxRate = 0.05f;
+        public float MaximumWithrawalSum = 600f;
+        public float DailyTransactionLimit = 2000f;
+        public float CurrencyConversionTaxRate = 0.02f;
+        public float ForeignTransactionTaxRate = 0.01f;
+        public float ForeignWithdrawalTaxRate = 0.025f;
         public float MaximumWithdrawalTax = 20f;
 
         public bool Withdraw(float sum, Currency targetCurrency, string ATMCountry, CreditCard card)
