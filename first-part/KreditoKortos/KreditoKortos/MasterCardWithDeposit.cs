@@ -58,7 +58,7 @@ namespace KreditoKortos
         // Master card owners can spend unlimited amounts of money each day.
         protected override bool PaymentLimitReached(float sumToPay)
         {
-            return payment.PaymentLimitReached(sumToPay);
+            return payment.PaymentLimitReached(sumToPay, this);
         }
 
         /// Master card owners do not pay tax when withrawing money abroad.

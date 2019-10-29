@@ -43,7 +43,7 @@ namespace CreditCardStrategy
                     myCard = new CreditCard(myAccount, paymentStrategy, loanStrategy);
                     break;
                 case '3':
-                    loanStrategy = new LoanDepositlessStrategy(100, 200000);
+                    loanStrategy = new LoanDepositlessStrategy(100, 250000);
                     paymentStrategy = new MasterPaymentStrategy();
                     myCard = new CreditCard(myAccount, paymentStrategy, loanStrategy);
                     break;
@@ -52,7 +52,7 @@ namespace CreditCardStrategy
                     return;
             }
 
-            // Predefined scenario:
+            // Predefined scenario: (client code)
             Console.WriteLine($"Your bank account has: {myAccount.getSum()} {myAccount.usedCurrency.Name}");
             Console.WriteLine("You're requesting a loan, enter sum:");
             float sum = float.Parse(Console.ReadLine());

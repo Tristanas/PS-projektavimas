@@ -48,7 +48,7 @@ namespace KreditoKortos
 
         protected override bool PaymentLimitReached(float sumToPay)
         {
-            return payment.PaymentLimitReached(sumToPay);
+            return payment.PaymentLimitReached(sumToPay, this);
         }
 
         protected override float WithrawalTax(float sum, string ATMCountry)

@@ -30,13 +30,12 @@ namespace KreditoKortos
 
         public float MaximumWithrawalSum()
         {
-            return 20000f;
+            return 5000f;
         }
 
-        // Master card owners can spend unlimited amounts of money each day.
-        public bool PaymentLimitReached(float sumToPay)
+        public bool PaymentLimitReached(float sumToPay, CreditCard card)
         {
-            return false;
+            return card.currentDayExpenses + sumToPay > 10000f;
         }
 
         /// Master card owners do not pay tax when withrawing money abroad.

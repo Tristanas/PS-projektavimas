@@ -9,11 +9,11 @@ namespace CreditCardStrategy
 {
     class PremiumPaymentStrategy: IPaymentStrategy
     {
-        public float MaximumWithrawalSum = 600f;
+        public float MaximumWithrawalSum = 1000f;
         public float DailyTransactionLimit = 2000f;
         public float CurrencyConversionTaxRate = 0.02f;
-        public float ForeignTransactionTaxRate = 0.01f;
-        public float ForeignWithdrawalTaxRate = 0.025f;
+        public float ForeignTransactionTaxRate = 0f;
+        public float ForeignWithdrawalTaxRate = 0.02f;
         public float MaximumWithdrawalTax = 20f;
 
         public bool Withdraw(float sum, Currency targetCurrency, string ATMCountry, CreditCard card)

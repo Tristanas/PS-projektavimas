@@ -9,10 +9,10 @@ namespace CreditCardStrategy
 {
     class RegularPaymentStrategy : IPaymentStrategy
     {
-        public float MaximumWithrawalSum = 150f;
+        public float MaximumWithrawalSum = 300f;
         public float DailyTransactionLimit = 500f;
         public float CurrencyConversionTaxRate = 0.04f;
-        public float ForeignTransactionTaxRate = 0.02f;
+        public float ForeignTransactionTaxRate = 0.05f;
         public float ForeignWithdrawalTaxRate = 0.05f;
         public float MaximumWithdrawalTax = 20f;
 

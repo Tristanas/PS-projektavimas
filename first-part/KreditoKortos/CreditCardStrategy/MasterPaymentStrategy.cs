@@ -9,7 +9,7 @@ namespace CreditCardStrategy
 {
     class MasterPaymentStrategy: IPaymentStrategy
     {
-        public float MaximumWithrawalSum = 3000f;
+        public float MaximumWithrawalSum = 5000f;
         public float DailyTransactionLimit = 10000f;
         public float GlobalDiscountPercentage = 0.01f;
 
