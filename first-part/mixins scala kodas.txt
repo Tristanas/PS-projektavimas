@@ -1,0 +1,196 @@
+class Currency(namec: String, valueInEuroc: Float)
+{
+  var name: String = namec;
+  var valueInEuro: Float = valueInEuroc;
+}
+
+class Loan(sumc: Float, depositc: String)
+{
+  var sum: Float = sumc;
+  var deposit: String = depositc;
+}
+
+class Account(ibanc:String, sumc: Float, currencyc: Currency)
+{
+  var iban = ibanc;
+  var sum = sumc;
+  var currency = currencyc;
+  var loan: Loan = null;
+  
+  def withraw(sum: Float): Boolean = {
+      if (sum > this.sum)
+      {
+        return false;
+      }
+      this.sum -= sum;
+      return true;
+    }
+  
+  def deposit(sumc: Float): Unit = {
+    sum += sumc;
+  }
+  
+  def getSum(): Float = {
+    return sum;
+  }
+  
+  def setDebt(loan: Loan): Boolean = {
+    if (this.loan == null) {
+      this.loan = loan;
+      return true;
+    }
+    return false;
+  }
+  
+  def getDebt(): Loan = {
+    return this.loan;
+  }
+  
+}
+
+abstract class CreditCard(accountc: Account)
+{
+  var account = accountc;
+  var currentDayExpenses: Int = 0;
+  
+  def convertCurrency(sum: Float, firstCurrency: Currency, resultCurrency: Currency): Float = {
+            val transferRatio: Float = firstCurrency.valueInEuro / resultCurrency.valueInEuro;
+            return sum * transferRatio;
+  }
+  
+  def currencyChangeTax(sum: Float, currency: Currency, targetCurrency: Currency): Float
+  def withrawalTax(costInOwnCurrency: Float, atmCountry: String, account: Account): Float
+  def paymentLimitReached(transactionCost: Float, dayExpenses: Float): Boolean
+  def maximumWithrawalSum(): Float
+  
+  def getLoanDeposit(): String
+  def isLoanPriceValid(sum: Float): Boolean
+  def isLoanDepositSuitable(deposit: String): Boolean
+  
+  def withdrawMoney(sum: Float, targetCurrency: Currency, atmCountry: String): Boolean = {
+    var transactionCost: Float = 0f;
+    var costInOwnCurrency: Float = convertCurrency(sum, targetCurrency, account.currency);
+    if (targetCurrency.name != account.currency.name)
+    {
+      transactionCost += currencyChangeTax(sum, account.currency, targetCurrency);
+    }
+
+    transactionCost += withrawalTax(costInOwnCurrency, atmCountry, this.account);
+    transactionCost += costInOwnCurrency;
+
+    if (!paymentLimitReached(transactionCost, currentDayExpenses) && costInOwnCurrency < maximumWithrawalSum())
+    {
+      return account.withraw(transactionCost);
+    }
+    return false;
+  }
+  
+  def getALoan(sum: Float): Unit = {
+    if (isLoanPriceValid(sum))
+    {
+      var deposit: String = getLoanDeposit();
+      var newLoan = new Loan(sum, deposit);
+      if (isLoanDepositSuitable(deposit))
+      {
+        requestLoan(newLoan);
+        return;
+      }
+    }
+    println("Invalid loan sum or deposit.");
+  }
+  
+  def requestLoan(loan: Loan): Unit = {
+      if (this.account.setDebt(loan))
+      {
+          this.account.deposit(loan.sum);
+          return;
+      }
+      println("Unable to get a new loan, already in debt.");
+  }
+  
+}
+
+trait LoanWithDeposit {
+  def getLoanDeposit(): String = {
+    return "car"
+  }
+  def isLoanPriceValid(sum: Float): Boolean = {
+    return sum > 2000f && sum < 250000f
+  }
+  
+  def isLoanDepositSuitable(deposit: String): Boolean = {
+    return deposit == "car" || deposit == "house"
+  }
+}
+
+trait LoanWithoutDeposit {
+  def getLoanDeposit(): String = {
+    return ""
+  }
+  def isLoanPriceValid(sum: Float): Boolean = {
+    return sum > 100f && sum < 20000f
+  }
+  
+  def isLoanDepositSuitable(deposit: String): Boolean = {
+    return true
+  }
+}
+
+trait RegularPayment {
+  def currencyChangeTax(sum: Float, currency: Currency, targetCurrency: Currency): Float = {
+    if (currency.name == targetCurrency.name) {
+      return 0f
+    }
+    return sum * 0.04f
+  }
+  def withrawalTax(costInOwnCurrency: Float, atmCountry: String, account: Account): Float = {
+    if (account.iban.startsWith(atmCountry)) {
+      return 0f
+    }
+    
+    return costInOwnCurrency * 0.05f
+  }
+  def paymentLimitReached(transactionCost: Float, dayExpenses: Float): Boolean = {
+    return transactionCost + dayExpenses > 500f;
+  }
+  def maximumWithrawalSum(): Float = {
+    return 300f;
+  }
+}
+
+trait MasterPayment {
+  def currencyChangeTax(sum: Float, currency: Currency, targetCurrency: Currency): Float = {
+    return 0
+  }
+  def withrawalTax(costInOwnCurrency: Float, atmCountry: String, account: Account): Float = {
+    return 0
+  }
+  def paymentLimitReached(transactionCost: Float, dayExpenses: Float): Boolean = {
+    return transactionCost + dayExpenses > 10000f;
+  }
+  def maximumWithrawalSum(): Float = {
+    return 5000f;
+  }
+}
+
+class RegularCardDepositless(accountc: Account) extends CreditCard(accountc) with RegularPayment with LoanWithoutDeposit;
+class RegularCardWithDeposit(accountc: Account) extends CreditCard(accountc) with RegularPayment with LoanWithDeposit;
+class MasterCardDepositless(accountc: Account) extends CreditCard(accountc) with MasterPayment with LoanWithoutDeposit;
+class MasterCardWithDeposit(accountc: Account) extends CreditCard(accountc) with MasterPayment with LoanWithDeposit;
+
+object Demo {
+   def main(args: Array[String]): Unit = {
+     val euro = new Currency("Euro", 1);
+     val pound = new Currency("Pound", 2);
+     
+     var myAccount = new Account("LT1313132467", 1000, euro);
+     var regularCard = new RegularCardWithDeposit(myAccount);
+     var masterCard = new MasterCardDepositless(myAccount);
+     
+     masterCard.getALoan(10000);
+     
+     regularCard.withdrawMoney(200, euro, "LT");
+     regularCard.withdrawMoney(200, euro, "GB");
+     println("Extracted money in LT and GB. Account state: " + myAccount.sum);
+   }
+}
