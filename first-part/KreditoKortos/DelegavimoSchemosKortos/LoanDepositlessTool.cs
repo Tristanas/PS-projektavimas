@@ -18,7 +18,7 @@ namespace DelegavimoSchemosKortos
             this.maximumLoan = maxLoan;
         }
 
-        public void GetLoan(CreditCard card, float sum)
+        public void GetLoan(float sum, CreditCard card)
         {
             if (sum >= minimumLoan && sum <= maximumLoan)
             {

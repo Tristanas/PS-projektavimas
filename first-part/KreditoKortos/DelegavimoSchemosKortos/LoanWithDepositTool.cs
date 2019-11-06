@@ -12,13 +12,13 @@ namespace DelegavimoSchemosKortos
         float minimumLoan;
         float maximumLoan;
 
-        public LoanWithDepositTool(float minLoan = 100f, float maxLoan = 5000f)
+        public LoanWithDepositTool(float minLoan = 100f, float maxLoan = 20000f)
         {
             this.minimumLoan = minLoan;
             this.maximumLoan = maxLoan;
         }
 
-        public void GetLoan(CreditCard card, float sum)
+        public void GetLoan(float sum, CreditCard card)
         {
             if (sum >= minimumLoan && sum <= maximumLoan)
             {

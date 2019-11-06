@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCardTemplate", "Kredi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCardStrategy", "CreditCardStrategy\CreditCardStrategy.csproj", "{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegavimoSchemosKortos", "DelegavimoSchemosKortos\DelegavimoSchemosKortos.csproj", "{BE462C26-BF57-45C9-88BB-9CDDDF6AA6A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFBE6FA9-01B7-4D9F-B85B-6983E0A3E114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE462C26-BF57-45C9-88BB-9CDDDF6AA6A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE462C26-BF57-45C9-88BB-9CDDDF6AA6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE462C26-BF57-45C9-88BB-9CDDDF6AA6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE462C26-BF57-45C9-88BB-9CDDDF6AA6A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

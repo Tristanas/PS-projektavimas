@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace DelegavimoSchemosKortos
 {
-    class MasterOrderingTool : IOrderingTool
+    class MasterOrderingTool : OrderingTool, IOrderingTool
     {
         double foreignDeliveryDuration = 2d;
         double localDeliveryDuration = 0.5d;
 
-        public Order OrderCard()
+        public Order OrderCard(CreditCard card)
         {
-            return new Order("Premium revo card",
+            Order cardOrder = new Order("Master revo card",
                 DateTime.Now.AddDays(foreignDeliveryDuration).ToString(),
                 100f);
+
+            return CarryOutOrder(cardOrder, card);
         }
 
         public Order OrderItem(string name, float price, string originCountry, CreditCard card)
@@ -29,7 +31,8 @@ namespace DelegavimoSchemosKortos
             }
             string deliveryArrival = DateTime.Now.AddDays(deliveryDuration).ToString();
 
-            return new Order(name, deliveryArrival, price, transferCost);
+            Order order = new Order(name, deliveryArrival, price, transferCost);
+            return CarryOutOrder(order, card);
         }
     }
 }

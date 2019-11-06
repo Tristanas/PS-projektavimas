@@ -192,5 +192,6 @@ object Demo {
      regularCard.withdrawMoney(200, euro, "LT");
      regularCard.withdrawMoney(200, euro, "GB");
      println("Extracted money in LT and GB. Account state: " + myAccount.sum);
+     regularCard.withdrawMoney(200, euro, "GB");
    }
 }

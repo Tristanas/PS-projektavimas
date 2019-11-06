@@ -7,55 +7,44 @@ using System.Threading.Tasks;
 
 namespace DelegavimoSchemosKortos
 {
-    class PremiumCard : CreditCard
+    class PremiumCard : CreditCard, IPaymentTool, ILoanManagementTool, IOrderingTool
     {
         IPaymentTool paymentTool;
         ILoanManagementTool loanTool;
         IOrderingTool orderingTool;
 
-        public PremiumCard(Account account, IPaymentTool payment, ILoanManagementTool loan,
-            IOrderingTool ordering) : base(account)
+        public PremiumCard(Account account, IOrderingTool ordering = null,
+            IPaymentTool payment = null,
+            ILoanManagementTool loan = null) : base(account)
         {
-            paymentTool = payment;
-            loanTool = loan;
-            orderingTool = ordering;
+            paymentTool = (payment != null) ? payment : new PremiumPaymentTool();
+            loanTool = (loan != null) ? loan : new LoanDepositlessTool();
+            orderingTool = (ordering != null) ? ordering : new PremiumOrderingTool();
         }
 
-        public void GetLoan(CreditCard card, float sum)
+        public void GetLoan(float sum, CreditCard card = null)
         {
-            loanTool.GetLoan(card, sum);
+            loanTool.GetLoan(sum, this);
         }
 
-        public Order OrderCard()
+        public Order OrderCard(CreditCard card = null)
         {
-            Order cardOrder = orderingTool.OrderCard();
-            if (account.withraw(cardOrder.price))
-            {
-                orders.Add(cardOrder);
-                return cardOrder;
-            }
-            return null;
+            return orderingTool.OrderCard(this);
         }
 
-        public Order OrderItem(string name, float price, string originCountry, CreditCard creditCard)
+        public Order OrderItem(string name, float price, string originCountry, CreditCard creditCard = null)
         {
-            Order newOrder = orderingTool.OrderItem(name, price, originCountry, creditCard);
-            if (account.withraw(newOrder.price + newOrder.transferPrice))
-            {
-                orders.Add(newOrder);
-                return newOrder;
-            }
-            return null;
+            return orderingTool.OrderItem(name, price, originCountry, this);
         }
 
-        public bool Transfer(float sum, Account recipient, CreditCard card)
+        public bool Transfer(float sum, Account recipient, CreditCard card = null)
         {
-            return paymentTool.Transfer(sum, recipient, card);
+            return paymentTool.Transfer(sum, recipient, this);
         }
 
-        public bool Withdraw(float sum, Currency currency, string atmCountry, CreditCard card)
+        public bool Withdraw(float sum, Currency currency, string atmCountry, CreditCard card = null)
         {
-            return paymentTool.Withdraw(sum, currency, atmCountry, card);
+            return paymentTool.Withdraw(sum, currency, atmCountry, this);
         }
     }
 }

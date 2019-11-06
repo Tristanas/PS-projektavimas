@@ -9,6 +9,6 @@ namespace DelegavimoSchemosKortos
 {
     public interface ILoanManagementTool
     {
-        void GetLoan(CreditCard card, float sum);
+        void GetLoan(float sum, CreditCard card);
     }
 }

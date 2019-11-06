@@ -11,13 +11,11 @@ namespace DelegavimoSchemosKortos
     {
         public float currentDayExpenses;
         public Account account;
-        public ICollection<Order> orders;
 
-        public CreditCard(Account account)
+    public CreditCard(Account account)
         {
             this.account = account;
             currentDayExpenses = 0;
-            orders = new List<Order>();
         }
 
     }

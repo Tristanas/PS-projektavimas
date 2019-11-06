@@ -8,7 +8,7 @@ namespace DelegavimoSchemosKortos
 {
     public interface IOrderingTool
     {
-        Order OrderCard();
+        Order OrderCard(CreditCard card);
         Order OrderItem(string name, float price, string originCountry, CreditCard creditCard);
     }
 }
