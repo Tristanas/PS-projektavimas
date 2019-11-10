@@ -24,7 +24,7 @@ namespace DelegavimoSchemosKortos
         {
             float transferCost = 0;
             double deliveryDuration = localDeliveryDuration;
-            if (card.account.iban.StartsWith(originCountry))
+            if (!card.account.iban.StartsWith(originCountry))
             {
                 transferCost = 0.02f * price;
                 deliveryDuration = foreignDeliveryDuration;
