@@ -21,7 +21,7 @@ namespace RPGEffectSystem
             this.currentHealth = maxHealth;
         }
 
-        public float dealDamage(float bonusDamage = 0, IFightableObject target)
+        public float dealDamage(IFightableObject target, float bonusDamage = 0)
         {
             float effectiveDamage = bonusDamage + (minDamage + maxDamage) / 2;
             float damageDealt = target.receiveDamage(effectiveDamage);

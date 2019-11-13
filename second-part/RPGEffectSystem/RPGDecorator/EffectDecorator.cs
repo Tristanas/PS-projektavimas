@@ -20,33 +20,45 @@ namespace RPGDecorator
         }
 
         // Looks for a decoration of given role starting from given decorator and then through its decorated objects.
-        public EffectDecorator[] getRole(EffectDecorator parent, string role)
+        public static EffectDecorator getRole(EffectDecorator startingDecorator, string role)
+        {
+           if (startingDecorator.roleName == role) return startingDecorator;
+
+            return (EffectDecorator)recursiveSearch(startingDecorator, role).fighter;
+        }
+
+        //Return the parent of sought role.
+        public static EffectDecorator recursiveSearch(EffectDecorator parent, string role)
         {
             EffectDecorator nextDecorator = ((EffectDecorator)(parent.fighter));
             if (nextDecorator == null) return null;
 
             if (nextDecorator.roleName == role)
             {
-                EffectDecorator[] result = { nextDecorator, parent };
-                return result;
+                return parent;
             }
-            
-            return nextDecorator.getRole(nextDecorator, role);
+
+            return recursiveSearch(nextDecorator, role);
         }
 
-        public EffectDecorator removeRole(EffectDecorator eff, string role)
+        // Removes the first decorator (that is not given decorator) of a given role.
+        public static EffectDecorator removeRole(EffectDecorator eff, string role)
         {
-            // decorators: [1] - decorator to remove, [2] - decorator that decorated the removed object.
-            EffectDecorator[] decorators = getRole(eff, role);
-            if (decorators == null) return null;
-            // decorators[2].fighter == decorators[1]
-            decorators[2].fighter = decorators[1].fighter;
-            return decorators[1];
+            EffectDecorator parent = recursiveSearch(eff, role);
+            if (parent == null)
+            {
+                return null;
+            }
+            EffectDecorator toRemove = (EffectDecorator)parent.fighter;
+            IFightableObject afterDeleted = toRemove.fighter;
+
+            parent.fighter = afterDeleted;
+            return toRemove;
         }
 
-        public float dealDamage(float bonusDamage, IFightableObject target)
+        public float dealDamage(IFightableObject target, float bonusDamage)
         {
-            return fighter.dealDamage(bonusDamage, target);
+            return fighter.dealDamage(target, bonusDamage);
         }
 
         public float receiveDamage(float baseDamage)
