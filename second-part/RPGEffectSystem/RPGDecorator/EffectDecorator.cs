@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace RPGDecorator
 {
-    // To do
+    /// To do: 
+    /// nextTurn()
+    /// removeExpiredEffects()
+    /// applyDOTs()
+    /// applyHOTs()
     class EffectDecorator : IFightableObject
     {
         IFightableObject fighter;
