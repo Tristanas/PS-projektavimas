@@ -43,11 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuffDecorator.cs" />
+    <Compile Include="DamageBuffDecorator.cs" />
+    <Compile Include="DebuffDecorator.cs" />
+    <Compile Include="DefenceBuffDecorator.cs" />
+    <Compile Include="DotDecorator.cs" />
+    <Compile Include="EffectDecorator.cs" />
+    <Compile Include="HotDecorator.cs" />
+    <Compile Include="OverTimeEffectDecorator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RPGEffectSystem\RPGEffectSystem.csproj">
+      <Project>{314e3737-68e8-42ac-9345-4dbda3cd4e3b}</Project>
+      <Name>RPGEffectSystem</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

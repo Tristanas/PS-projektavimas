@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace RPGEffectSystem
 {
-    public class Player : Fightable
+    public class NPC : Fightable
     {
-        public Player(float maxHealth, float minDamage, float maxDamage, string name = "Player"):
+        public NPC(float maxHealth, float minDamage, float maxDamage, string name = "Mob") : 
             base(maxHealth, minDamage, maxDamage, name)
         {
 
+        }
+
+        public void reset()
+        {
+            setHP(maxHealth);
         }
     }
 }
