@@ -39,6 +39,12 @@ namespace RPGDecorator
             EffectDecorator.addEffect(new DotDecorator(null, 3, 15f, oteRoleName), playerBuffs);
             endTurn(buffedMob, buffedPlayer);
 
+            // turn 3:
+            Console.WriteLine("Player becomes invulnerable for 1 turn");
+            EffectDecorator.addEffect(new InvulnerabilityDecorator(null, 1, 5, 10, "godmode"), playerBuffs);
+            buffedMob.dealDamage(buffedPlayer);
+            endTurn(buffedMob, buffedPlayer);
+
             Console.Read();
         }
 

@@ -44,15 +44,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuffDecorator.cs" />
+    <Compile Include="BuffWithStacksDecorator.cs" />
     <Compile Include="DamageBuffDecorator.cs" />
     <Compile Include="DebuffDecorator.cs" />
     <Compile Include="DefenceBuffDecorator.cs" />
     <Compile Include="DotDecorator.cs" />
     <Compile Include="EffectDecorator.cs" />
     <Compile Include="HotDecorator.cs" />
+    <Compile Include="InvulnerabilityDecorator.cs" />
     <Compile Include="OverTimeEffectDecorator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShieldEffectDecorator.cs" />
+    <Compile Include="VulnerabilityDecorator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

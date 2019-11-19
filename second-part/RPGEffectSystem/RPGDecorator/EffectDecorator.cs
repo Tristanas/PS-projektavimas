@@ -30,7 +30,10 @@ namespace RPGDecorator
             fighter.endTurn();
 
             // alternatively could first apply healing, then damage effects.
-            applyOverTimeEffects(this);
+            if (getRole(this, "godmode") == null)
+            {
+                applyOverTimeEffects(this);
+            }
             removeExpiredEffects(this);
 
         }
@@ -124,7 +127,26 @@ namespace RPGDecorator
 
         virtual public float receiveDamage(float baseDamage)
         {
+            EffectDecorator godMode = getRole(this, "godmode");
+            if (godMode != null)
+            {
+                ((InvulnerabilityDecorator)godMode).nullifyHit(baseDamage);
+                Console.WriteLine("Target receives 0 damage");
+                return 0;
+            }
             return fighter.receiveDamage(baseDamage);
+        }
+
+        private float applyImmunity(float incomingDamage)
+        {
+            EffectDecorator godMode = getRole(this, "godmode");
+            if (godMode != null)
+            {
+                ((InvulnerabilityDecorator)godMode).nullifyHit(incomingDamage);
+                Console.WriteLine("Target receives 0 damage");
+                return 0;
+            }
+            return incomingDamage;
         }
 
         public void heal(float hp)
