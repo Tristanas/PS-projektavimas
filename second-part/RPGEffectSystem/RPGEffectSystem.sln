@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGEffectSystem", "RPGEffec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGDecorator", "RPGDecorator\RPGDecorator.csproj", "{D4F8BFD3-FBE0-4094-8634-6F6E47C051D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGExtension", "RPGExtension\RPGExtension.csproj", "{C981FBB5-01B5-4CD9-9267-9D6554A92E24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4F8BFD3-FBE0-4094-8634-6F6E47C051D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F8BFD3-FBE0-4094-8634-6F6E47C051D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F8BFD3-FBE0-4094-8634-6F6E47C051D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

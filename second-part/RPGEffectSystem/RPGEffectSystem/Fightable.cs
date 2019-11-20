@@ -14,7 +14,7 @@ namespace RPGEffectSystem
         public float minDamage;
         public float maxDamage;
 
-        public Fightable(float maxHealth, float minDamage, float maxDamage, string name)
+        public Fightable(float maxHealth, float minDamage, float maxDamage, string name = "Fighter")
         {
             this.maxHealth = maxHealth;
             this.minDamage = minDamage;
@@ -23,7 +23,7 @@ namespace RPGEffectSystem
             this.name = name;
         }
 
-        public float dealDamage(IFightableObject target, float multiplicator = 1)
+        virtual public float dealDamage(IFightableObject target, float multiplicator = 1)
         {
             float effectiveDamage = Math.Max(0, multiplicator * (minDamage + maxDamage) / 2);
             Console.WriteLine($"{name} attacks opponent for {effectiveDamage} potential damage.");
@@ -31,7 +31,7 @@ namespace RPGEffectSystem
             return damageDealt;
         }
 
-        public float receiveDamage(float baseDamage)
+        virtual public float receiveDamage(float baseDamage)
         {
             Console.WriteLine($"{name} received {baseDamage} damage.");
             this.currentHealth -= baseDamage;
@@ -49,7 +49,7 @@ namespace RPGEffectSystem
             currentHealth = Math.Min(currentHealth + hp, maxHealth);
         }
 
-        public void endTurn()
+        virtual public void endTurn()
         {
             heal(0.01f * maxHealth);
         }

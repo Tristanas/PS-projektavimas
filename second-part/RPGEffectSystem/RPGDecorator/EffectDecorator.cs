@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace RPGDecorator
 {
-    /// To do: 
-    /// applyDOTs()
-    /// applyHOTs()
     class EffectDecorator : IFightableObject
     {
         protected IFightableObject fighter;
