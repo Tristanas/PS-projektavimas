@@ -125,7 +125,7 @@ namespace RPGDecorator
         virtual public float receiveDamage(float baseDamage)
         {
             EffectDecorator godMode = getRole(this, "godmode");
-            if (godMode != null)
+            if (godMode != null && godMode is InvulnerabilityDecorator)
             {
                 ((InvulnerabilityDecorator)godMode).nullifyHit(baseDamage);
                 Console.WriteLine("Target receives 0 damage");
@@ -137,7 +137,7 @@ namespace RPGDecorator
         private float applyImmunity(float incomingDamage)
         {
             EffectDecorator godMode = getRole(this, "godmode");
-            if (godMode != null)
+            if (godMode != null && godMode is InvulnerabilityDecorator)
             {
                 ((InvulnerabilityDecorator)godMode).nullifyHit(incomingDamage);
                 Console.WriteLine("Target receives 0 damage");
