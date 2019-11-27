@@ -22,8 +22,10 @@ namespace RPGVisitor
             target.heal(tickHeal);
         }
 
-        override public void modifyTargetStats(bool newEffect)
-        { }
+        public override bool acceptVisitor(IEffectVisitor visitor)
+        {
+            return visitor.visit(this);
+        }
 
         
     }

@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace RPGVisitor
 {
-    class AttackEffect: Effect
+    class AttackEffect: StatusEffect
     {
         float damageMultiplicator;
-        IFightableObject target;
-        public AttackEffect(int duration, IFightableObject target, float damageMultiplicator) : base(duration)
+        public AttackEffect(int duration, IFightableObject target, float damageMultiplicator) : base(duration, target)
         {
             this.damageMultiplicator = damageMultiplicator;
-            this.target = target;
         }
 
         override public void modifyTargetStats(bool newEffect)
@@ -21,6 +19,10 @@ namespace RPGVisitor
             target.affectAttack(newEffect ? 
                 damageMultiplicator 
                 : 1 / damageMultiplicator);
+        }
+        public override bool acceptVisitor(IEffectVisitor visitor)
+        {
+            return visitor.visit(this);
         }
     }
 }

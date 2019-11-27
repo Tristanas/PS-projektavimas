@@ -12,8 +12,11 @@ namespace RPGVisitor
         public string name;
         private float currentHealth;
         public float maxHealth;
+        // Hit is between minDamage and maxDamage. Currently it's the average. Should be random eventually.
         public float minDamage;
         public float maxDamage;
+
+        // Divides incoming damage by a number.
         public float defenceMultiplicator;
 
         List<IEffect> effects;
@@ -27,6 +30,7 @@ namespace RPGVisitor
             this.currentHealth = maxHealth;
             this.name = name;
             defenceMultiplicator = 1f;
+
             effects = new List<IEffect>();
         }
 
@@ -40,9 +44,10 @@ namespace RPGVisitor
 
         virtual public float receiveDamage(float baseDamage)
         {
-            Console.WriteLine($"{name} received {baseDamage} damage.");
-            this.currentHealth -= baseDamage * defenceMultiplicator;
-            return baseDamage;
+            float effectiveDamage = baseDamage / defenceMultiplicator;
+            Console.WriteLine($"{name} received {effectiveDamage} damage.");
+            this.currentHealth -= effectiveDamage;
+            return effectiveDamage;
         }
 
         protected void setHP(float newHP)
@@ -83,13 +88,18 @@ namespace RPGVisitor
         public void affectDefence(float multiplicator)
         {
             if (multiplicator <= 0) return;
-            this.defenceMultiplicator *= defenceMultiplicator;
+            defenceMultiplicator *= multiplicator;
+        }
+
+        public void addStatusEffect(StatusEffect effect)
+        {
+            effects.Add(effect);
+            effect.modifyTargetStats(true);
         }
 
         public void addEffect(IEffect effect)
         {
             effects.Add(effect);
-            effect.modifyTargetStats(true);
         }
     }
 }

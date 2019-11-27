@@ -17,10 +17,7 @@ namespace RPGVisitor
             this.duration = duration;
         }
 
-        public bool acceptVisitor(IEffectVisitor visitor)
-        {
-            return visitor.visit(this);
-        }
+        abstract public bool acceptVisitor(IEffectVisitor visitor);
 
         virtual public bool expire()
         {
@@ -31,12 +28,5 @@ namespace RPGVisitor
         {
             return maxDuration == duration;
         }
-
-        bool IEffect.acceptVisitor(IEffectVisitor visitor)
-        {
-            return visitor.visit(this);
-        }
-
-        public abstract void modifyTargetStats(bool newEffect);
     }
 }

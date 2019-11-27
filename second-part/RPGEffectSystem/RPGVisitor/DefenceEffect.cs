@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace RPGVisitor
 {
-    class DefenceEffect: Effect
+    class DefenceEffect: StatusEffect
     {
         float damageReductionPercent;
-        IFightableObject target;
 
-        public DefenceEffect(int duration, IFightableObject target, float damageReductionPercent) : base(duration)
+        public DefenceEffect(int duration, IFightableObject target, float damageReductionPercent) : base(duration, target)
         {
             this.damageReductionPercent = damageReductionPercent;
-            this.target = target;
+        }
+
+        public override bool acceptVisitor(IEffectVisitor visitor)
+        {
+            return visitor.visit(this);
         }
 
         override public void modifyTargetStats(bool newEffect)

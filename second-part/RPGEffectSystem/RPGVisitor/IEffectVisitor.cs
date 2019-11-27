@@ -8,7 +8,7 @@ namespace RPGVisitor
 {
     interface IEffectVisitor
     {
-        bool visit(IOtEffect effect);
-        bool visit(IEffect effect);
+        bool visit(StatusEffect effect);
+        bool visit(HotEffect effect);
     }
 }

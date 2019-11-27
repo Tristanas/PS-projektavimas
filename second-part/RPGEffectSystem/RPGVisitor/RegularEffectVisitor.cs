@@ -12,13 +12,13 @@ namespace RPGVisitor
         // Old effects have their changes removed.
         // Each method returns if the effect has expired.
 
-        public bool visit(IOtEffect effect)
+        public bool visit(HotEffect effect)
         {
             effect.activate();
             return effect.expire();
         }
 
-        public bool visit(IEffect effect)
+        public bool visit(StatusEffect effect)
         {
             bool expired = effect.expire();
             if (expired)
