@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGDecorator", "RPGDecorato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGExtension", "RPGExtension\RPGExtension.csproj", "{C981FBB5-01B5-4CD9-9267-9D6554A92E24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGVisitor", "RPGVisitor\RPGVisitor.csproj", "{6EA2578C-3869-496D-B0F5-B6E0EBFC1B0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C981FBB5-01B5-4CD9-9267-9D6554A92E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA2578C-3869-496D-B0F5-B6E0EBFC1B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA2578C-3869-496D-B0F5-B6E0EBFC1B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA2578C-3869-496D-B0F5-B6E0EBFC1B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA2578C-3869-496D-B0F5-B6E0EBFC1B0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

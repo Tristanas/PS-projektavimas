@@ -1,26 +1,30 @@
-﻿using System;
+﻿using RPGEffectSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPGEffectSystem
+namespace RPGVisitor
 {
-    public class Fightable : IFightableObject
+    class Fighter: IFightableObject
     {
+        List<IEffect> effects;
         public string name;
         private float currentHealth;
         public float maxHealth;
         public float minDamage;
         public float maxDamage;
+        public float defenceMultiplicator;
 
-        public Fightable(float maxHealth, float minDamage, float maxDamage, string name = "Fighter")
+        public Fighter(float maxHealth, float minDamage, float maxDamage, string name = "Fighter")
         {
             this.maxHealth = maxHealth;
             this.minDamage = minDamage;
             this.maxDamage = maxDamage;
             this.currentHealth = maxHealth;
             this.name = name;
+            defenceMultiplicator = 1f;
         }
 
         virtual public float dealDamage(IFightableObject target, float multiplicator = 1)
@@ -34,7 +38,7 @@ namespace RPGEffectSystem
         virtual public float receiveDamage(float baseDamage)
         {
             Console.WriteLine($"{name} received {baseDamage} damage.");
-            this.currentHealth -= baseDamage;
+            this.currentHealth -= baseDamage * defenceMultiplicator;
             return baseDamage;
         }
 
@@ -55,6 +59,19 @@ namespace RPGEffectSystem
         virtual public void endTurn()
         {
             heal(0.01f * maxHealth);
+        }
+
+        public void affectAttack(float multiplicator)
+        {
+            if (multiplicator <= 0) return;
+            this.minDamage *= multiplicator;
+            this.maxDamage *= multiplicator;
+        }
+
+        public void affectDefence(float multiplicator)
+        {
+            if (multiplicator <= 0) return;
+            this.defenceMultiplicator *= defenceMultiplicator;
         }
     }
 }
