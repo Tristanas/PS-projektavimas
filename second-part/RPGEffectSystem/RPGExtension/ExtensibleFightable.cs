@@ -68,14 +68,13 @@ namespace RPGExtension
         {
             foreach (IEffect otEffect in effects["ote"])
             {
-                try
+                if (otEffect is OverTimeEffect)
                 {
                     ((OverTimeEffect)otEffect).activate();
                 }
-                catch (InvalidCastException err)
+                else
                 {
                     Console.WriteLine("There is an invalid effect in over time effects");
-                    Console.WriteLine(err.Message);
                 }
             }
         }
@@ -84,14 +83,13 @@ namespace RPGExtension
         {
             foreach (IEffect attackEffect in effects["att"])
             {
-                try
+                if (attackEffect is IAttackEffect)
                 {
                     multiplicator = ((IAttackEffect)attackEffect).modifyAttack(multiplicator);
                 }
-                catch (InvalidCastException err)
+                else
                 {
                     Console.WriteLine("There is an invalid effect in attack effects");
-                    Console.WriteLine(err.Message);
                 }
             }
             
@@ -109,14 +107,13 @@ namespace RPGExtension
 
             foreach (IEffect defenceEffect in effects["def"])
             {
-                try
+                if (defenceEffect is IDefenceEffect)
                 {
                     multiplicator = ((IDefenceEffect)defenceEffect).modifyHit(multiplicator);
                 }
-                catch (InvalidCastException err)
+                else
                 {
                     Console.WriteLine("There is an invalid effect in attack effects");
-                    Console.WriteLine(err.Message);
                 }
             }
 
