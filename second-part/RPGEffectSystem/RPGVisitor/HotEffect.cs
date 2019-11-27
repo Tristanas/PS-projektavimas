@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPGVisitor
 {
-    class HotEffect : Effect, IEffect, IOtEffect
+    class HotEffect : Effect, IOtEffect
     {
         IFightableObject target;
         float tickHeal;
@@ -21,5 +21,10 @@ namespace RPGVisitor
         {
             target.heal(tickHeal);
         }
+
+        override public void modifyTargetStats(bool newEffect)
+        { }
+
+        
     }
 }

@@ -9,13 +9,15 @@ namespace RPGVisitor
 {
     class Fighter: IFightableObject
     {
-        List<IEffect> effects;
         public string name;
         private float currentHealth;
         public float maxHealth;
         public float minDamage;
         public float maxDamage;
         public float defenceMultiplicator;
+
+        List<IEffect> effects;
+        IEffectVisitor effectVisitor = new RegularEffectVisitor();
 
         public Fighter(float maxHealth, float minDamage, float maxDamage, string name = "Fighter")
         {
@@ -25,6 +27,7 @@ namespace RPGVisitor
             this.currentHealth = maxHealth;
             this.name = name;
             defenceMultiplicator = 1f;
+            effects = new List<IEffect>();
         }
 
         virtual public float dealDamage(IFightableObject target, float multiplicator = 1)
@@ -59,6 +62,15 @@ namespace RPGVisitor
         virtual public void endTurn()
         {
             heal(0.01f * maxHealth);
+            List<IEffect> toRemove = new List<IEffect>();
+            foreach(IEffect effect in effects)
+            {
+                if (effect.acceptVisitor(effectVisitor))
+                {
+                    toRemove.Add(effect);
+                }
+            }
+            toRemove.ForEach((element) => effects.Remove(element));
         }
 
         public void affectAttack(float multiplicator)
@@ -72,6 +84,12 @@ namespace RPGVisitor
         {
             if (multiplicator <= 0) return;
             this.defenceMultiplicator *= defenceMultiplicator;
+        }
+
+        public void addEffect(IEffect effect)
+        {
+            effects.Add(effect);
+            effect.modifyTargetStats(true);
         }
     }
 }

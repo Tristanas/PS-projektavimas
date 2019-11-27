@@ -22,5 +22,7 @@ namespace RPGVisitor
         void affectAttack(float multiplicator);
 
         void affectDefence(float multiplicator);
+
+        void addEffect(IEffect effect);
     }
 }

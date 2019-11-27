@@ -16,7 +16,7 @@ namespace RPGVisitor
             this.target = target;
         }
 
-        public void modifyStats(bool newEffect)
+        override public void modifyTargetStats(bool newEffect)
         {
             target.affectAttack(newEffect ? 
                 damageMultiplicator 

@@ -10,6 +10,55 @@ namespace RPGVisitor
     {
         static void Main(string[] args)
         {
+            Player player = new Player(100f, 3f, 5f);
+            NPC mob = new NPC(40f, 2f, 3f);
+
+            player.addEffect(new AttackEffect(4, player, 1.4f));
+            mob.addEffect(new DefenceEffect(2, mob, 1.2f));
+
+            // turn 1:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 2:
+            Console.WriteLine("Player uses a healing skill on himself");
+            player.addEffect(new HotEffect(3, 10f, player));
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 3:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 4:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 5:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 6:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+
+            // turn 7:
+            player.dealDamage(mob);
+            mob.dealDamage(player);
+            endTurn(mob, player);
+        }
+
+        private static void endTurn(Fighter fightable, Fighter fightable2)
+        {
+            Console.WriteLine("Turn over");
+            fightable.endTurn();
+            fightable2.endTurn();
+            Console.WriteLine("\nNext turn");
         }
     }
 }

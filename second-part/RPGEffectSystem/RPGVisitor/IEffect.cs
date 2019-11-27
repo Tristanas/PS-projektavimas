@@ -3,7 +3,8 @@
     interface IEffect
     {
         bool expire();
-        float acceptVisitor(IEffectVisitor visitor);
+        bool acceptVisitor(IEffectVisitor visitor);
         bool isNewEffect();
+        void modifyTargetStats(bool newEffect);
     }
 }

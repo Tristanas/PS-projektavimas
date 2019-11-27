@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPGVisitor
 {
-    class Effect: IEffect
+    abstract class Effect: IEffect
     {
         protected int duration;
         public int maxDuration;
@@ -17,7 +17,7 @@ namespace RPGVisitor
             this.duration = duration;
         }
 
-        public float acceptVisitor(IEffectVisitor visitor)
+        public bool acceptVisitor(IEffectVisitor visitor)
         {
             return visitor.visit(this);
         }
@@ -31,5 +31,12 @@ namespace RPGVisitor
         {
             return maxDuration == duration;
         }
+
+        bool IEffect.acceptVisitor(IEffectVisitor visitor)
+        {
+            return visitor.visit(this);
+        }
+
+        public abstract void modifyTargetStats(bool newEffect);
     }
 }
